@@ -1,0 +1,1362 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AK STUDIO - Premium Digital Agency</title>
+    <!-- Fonts: Poppins (Heading) and Inter (Body) -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Font Awesome for icons (Back to Top) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <style>
+        /* BASE STYLES */
+        :root {
+            --color-primary: #0A0F2C; /* Navy Blue - kept dark for neon contrast */
+            --color-accent-1: #38BDF8; /* Primary Cyan */
+            --color-accent-2: #A78BFA; /* Light Purple */
+            --color-text: #E0E7FF;
+            --color-text-faint: #9CA3AF;
+            --duration: 0.35s;
+            --smooth-ease: cubic-bezier(0.65, 0, 0.35, 1); 
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--color-primary);
+            color: var(--color-text);
+            overflow-x: hidden;
+            position: relative; 
+        }
+
+        h1, h2, h3, h4 {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 700;
+        }
+
+        a {
+            text-decoration: none;
+            color: var(--color-accent-2);
+            transition: color var(--duration) var(--smooth-ease);
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1280px;
+            margin: 0 auto;
+        }
+        
+        /* Form Inputs */
+        input[type="text"], input[type="email"], textarea, select {
+            width: 100%;
+            padding: 0.75rem;
+            margin-bottom: 1rem;
+            border-radius: 6px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            background-color: rgba(255, 255, 255, 0.05);
+            color: var(--color-text);
+            transition: border-color 0.2s;
+        }
+        input[type="text"]:focus, input[type="email"]:focus, textarea:focus, select:focus {
+            border-color: var(--color-accent-2);
+            outline: none;
+        }
+        .contact-form label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: var(--color-text-faint);
+        }
+        
+        /* AI Brief Output Styling */
+        #brief-output {
+            margin-top: 2rem;
+            padding: 1.5rem;
+            border-radius: 12px;
+            background-color: rgba(167, 139, 250, 0.1); /* Use accent 2 */
+            border: 1px solid var(--color-accent-2);
+        }
+        #brief-output h4 {
+            color: var(--color-accent-2);
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+        
+        /* --- NEW BACKGROUND UPGRADE: CYBER GRID MATRIX --- */
+        #animated-blob-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -10; 
+            pointer-events: none;
+            overflow: hidden;
+        }
+
+        #starfield-canvas {
+            display: block;
+            width: 100%;
+            height: 100%;
+        }
+
+
+        /* --- SCROLL PROGRESS BAR --- */
+        #scroll-progress {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 3px;
+            width: 0%;
+            background: linear-gradient(90deg, var(--color-accent-1), var(--color-accent-2));
+            z-index: 101;
+            transition: width 0.1s linear;
+        }
+
+        /* --- NAVIGATION (Blurred Glass on Scroll) --- */
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 100;
+            padding: 1.5rem 0;
+            transition: background var(--duration) var(--smooth-ease), backdrop-filter var(--duration) var(--smooth-ease), border-bottom var(--duration) var(--smooth-ease);
+        }
+
+        .navbar-scrolled {
+            background-color: rgba(10, 15, 44, 0.9); 
+            backdrop-filter: blur(15px); 
+            border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+        }
+
+        .nav-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-logo {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--color-text);
+            display: flex;
+            align-items: center;
+        }
+
+        .nav-logo img {
+            height: 30px;
+            margin-right: 8px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            font-weight: 500;
+            color: var(--color-text-faint);
+        }
+
+        .nav-links a:hover {
+            color: var(--color-accent-2);
+        }
+
+        /* --- BUTTONS (Standard and Magnetic) --- */
+        .btn-primary {
+            background: linear-gradient(135deg, var(--color-accent-1), var(--color-accent-2));
+            color: var(--color-primary);
+            padding: 0.75rem 1.75rem;
+            border-radius: 8px;
+            font-weight: 600;
+            display: inline-block;
+            transition: transform var(--duration) var(--smooth-ease), box-shadow var(--duration) var(--smooth-ease);
+            border: none;
+            cursor: pointer;
+            text-align: center;
+            will-change: transform, box-shadow;
+        }
+
+        .btn-primary:hover {
+            box-shadow: 0 10px 40px rgba(56, 189, 248, 0.8), 0 0 0 1px rgba(255, 255, 255, 0.3); 
+            transform: translateY(-2px);
+        }
+        
+        /* Secondary Button Style */
+        .btn-secondary {
+            background-color: rgba(255, 255, 255, 0.05);
+            color: var(--color-accent-2);
+            padding: 0.75rem 1.75rem;
+            border-radius: 8px;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            border: 1px solid var(--color-accent-1);
+            cursor: pointer;
+            transition: background-color var(--duration) var(--smooth-ease), border-color var(--duration) var(--smooth-ease);
+            will-change: transform;
+        }
+        .btn-secondary:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+            border-color: var(--color-accent-2);
+        }
+
+        /* Magnetic Button Styling refinement */
+        .magnetic {
+            will-change: transform;
+            transition: transform 0.08s linear; 
+        }
+
+        /* --- CARD STYLES & 3D TILT EFFECT --- */
+        .portfolio-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+        .card {
+            background-color: rgba(255, 255, 255, 0.03);
+            border-radius: 12px;
+            padding: 2rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            position: relative;
+            overflow: hidden;
+            transition: box-shadow var(--duration) var(--smooth-ease);
+            z-index: 10;
+            display: flex;
+            flex-direction: column;
+            
+            perspective: 1000px;
+        }
+        
+        /* The inner content div that gets transformed */
+        .tilt-inner {
+            transition: transform 0.1s linear, box-shadow var(--duration) var(--smooth-ease);
+            transform-style: preserve-3d;
+            height: 100%;
+        }
+        
+        /* Neon Glow Effect on Card Hover */
+        .card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: conic-gradient(from 0deg, var(--color-accent-1) 0%, var(--color-accent-2) 50%, var(--color-accent-1) 100%);
+            opacity: 0;
+            filter: blur(40px);
+            transition: opacity 0.5s var(--smooth-ease);
+            z-index: -1;
+        }
+
+        /* Global lift and glow on card hover */
+        .card:hover {
+            box-shadow: 0 15px 45px rgba(56, 189, 248, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.2);
+        }
+
+        .card:hover .tilt-inner {
+             box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5); 
+        }
+
+        .card:hover::before {
+            opacity: 0.2; 
+            animation: rotateGlow 5s linear infinite;
+        }
+
+        @keyframes rotateGlow {
+            to { transform: rotate(360deg); }
+        }
+        
+        /* Portfolio Image Styling */
+        .portfolio-item img {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: transform 0.1s linear; /* For tilt effect */
+        }
+
+        /* --- SCROLL ANIMATIONS --- */
+        .anim-element {
+            opacity: 0;
+            transition: opacity 0.9s var(--smooth-ease), transform 0.9s var(--smooth-ease);
+        }
+        
+        .anim-element.visible {
+            opacity: 1;
+            transform: none !important; 
+        }
+
+        .slide-up { transform: translateY(40px); }
+        .slide-left { transform: translateX(-40px); }
+        .slide-right { transform: translateX(40px); }
+
+        /* --- BACK TO TOP BUTTON --- */
+        #back-to-top {
+            position: fixed;
+            bottom: 25px;
+            right: 25px;
+            background: var(--color-accent-1);
+            color: var(--color-primary);
+            width: 50px;
+            height: 50px;
+            border: none;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.25rem;
+            cursor: pointer;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.4);
+            opacity: 0;
+            transform: scale(0.8);
+            transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+            z-index: 99;
+        }
+
+        #back-to-top.show {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        #back-to-top:hover {
+            background: var(--color-accent-2);
+        }
+
+        /* --- HERO SPECIFIC STYLES --- */
+        .hero-section {
+            padding: 12rem 0 6rem;
+            display: flex;
+            align-items: center;
+            min-height: 100vh;
+            position: relative;
+            text-align: center; 
+            justify-content: center;
+            flex-direction: column;
+        }
+        
+        .hero-content {
+            max-width: 800px; 
+            margin: 0 auto;
+        }
+
+        .hero-title {
+            font-size: 5rem;
+            line-height: 1.1;
+        }
+
+        .hero-title span {
+            background: -webkit-linear-gradient(45deg, var(--color-accent-2), var(--color-accent-1));
+             -webkit-background-clip:text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .hero-subtitle {
+            font-size: 1.25rem;
+            margin: 1.5rem 0 2rem;
+            color: var(--color-text-faint);
+        }
+        
+        /* Responsive Adjustments */
+        @media (max-width: 1024px) {
+            .hero-title {
+                font-size: 3.5rem;
+            }
+            .about-layout {
+                flex-direction: column;
+            }
+            .about-layout > div {
+                flex: 1 1 100% !important;
+            }
+        }
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            .hero-section {
+                padding-top: 8rem;
+                min-height: auto;
+            }
+            .hero-title {
+                font-size: 2.5rem;
+            }
+            .portfolio-grid {
+                grid-template-columns: 1fr;
+            }
+            .lightbox-content {
+                width: 95%;
+            }
+            .hero-title {
+                font-size: 3rem;
+            }
+            .contact-flex {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Scroll Progress Bar -->
+    <div id="scroll-progress"></div>
+    
+    <!-- NEW: Chaotic Starfield Background Container -->
+    <div id="animated-blob-container">
+        <!-- Canvas for the Hyper-Speed Particle Animation -->
+        <canvas id="starfield-canvas"></canvas>
+    </div>
+
+    <!-- Navigation Bar -->
+    <nav class="navbar" id="main-navbar">
+        <div class="container nav-content">
+            <a href="#home" class="nav-logo">
+                <img src=<a href="https://imgbb.com/"><img src="https://i.ibb.co/0HvnL8L/LOGO.jpg" alt="LOGO" border="0"></a> 
+            </a>
+            <div class="nav-links">
+                <a href="#home">Home</a>
+                <a href="#services">Services</a>
+                <a href="#portfolio">Portfolio</a>
+                <a href="#about">About</a>
+                <a href="#contact" class="btn-primary magnetic">Contact Us</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Lightbox for Portfolio (Modal) - CSS not repeated for brevity -->
+    <div id="lightbox" class="lightbox" style="
+        display: none; position: fixed; z-index: 200; padding-top: 60px; left: 0; top: 0; width: 100%; height: 100%; overflow: auto; 
+        background-color: rgba(0,0,0,0.9);
+    ">
+        <span class="lightbox-close" onclick="closeLightbox()" style="
+            position: absolute; top: 15px; right: 35px; color: #f1f1f1; font-size: 40px; font-weight: bold; transition: 0.3s; cursor: pointer;
+        ">&times;</span>
+        <div class="lightbox-content" style="
+            margin: auto; display: block; width: 80%; max-width: 900px;
+        ">
+            <img id="lightbox-image" src="" alt="" style="
+                width: 100%; height: auto; display: block; border-radius: 8px;
+            ">
+            <div id="lightbox-caption" class="lightbox-caption" style="
+                margin: auto; display: block; width: 80%; max-width: 900px; text-align: center; color: #ccc; padding: 10px 0; height: 150px;
+            "></div>
+        </div>
+    </div>
+
+    <!-- Main Application Container (Content is loaded here) -->
+    <div id="app-container">
+        <!-- Content will be injected and animated here -->
+    </div>
+    
+    <!-- Floating Back to Top Button -->
+    <button id="back-to-top" onclick="window.scrollTo({ top: 0, behavior: 'smooth' })">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <!-- Footer -->
+    <footer class="footer" style="padding: 2rem 0; text-align: center; border-top: 1px solid rgba(255, 255, 255, 0.1);">
+        <div class="container">
+            <p style="color: var(--color-text-faint); font-size: 0.85rem;">&copy; 2025 AK STUDIO. All rights reserved. Powered by AK STUDIO .</p>
+        </div>
+    </footer>
+
+    <!-- --- PAGE TEMPLATES (For Hash-based Routing) --- -->
+
+    <!-- 1. Home Page Content -->
+    <template id="home-page-template">
+        <section class="hero-section container">
+            <!-- Hero content is now centered and full width -->
+            <div class="hero-content" style="z-index: 10; position: relative;">
+                <h1 class="hero-title anim-element slide-up" id="hero-title-text">
+                    We Craft 
+                    <span id="typing-text"></span>
+                </h1>
+                <p class="hero-subtitle anim-element slide-up" style="transition-delay: 0.2s;">
+                    AK STUDIO crafts sophisticated digital experiences that convert leads into loyal customers. Premium design, unmatched performance.
+                </p>
+                <a href="#contact" class="btn-primary magnetic anim-element slide-up" style="transition-delay: 0.4s;">Start Your Project</a>
+            </div>
+        </section>
+
+        <!-- Services Overview Section -->
+        <section class="container" style="padding: 4rem 0;">
+            <h2 class="hero-title text-3xl text-center mb-16 anim-element slide-up">Our Premium Services</h2>
+            <div class="portfolio-grid">
+                <div class="card tilt-card anim-element slide-left">
+                    <div class="tilt-inner">
+                        <img class="mx-auto mb-4" src="https://placehold.co/100x100/A78BFA/0A0F2C?text=WEB" onerror="this.style.display='none'" alt="Web Design Icon" style="width: 100px; height: 100px; object-fit: cover; border-radius: 8px;">
+                        <h3 class="card-title">Web Design & Dev</h3>
+                        <p class="text-sm" style="color: var(--color-text-faint);">Bespoke websites optimized for speed and conversion using modern, clean code.</p>
+                        <div style="margin-top: 1rem; text-align: right;">
+                            <a href="#contact" onclick="loadPage()" class="btn-secondary">CONTACT US &rarr;</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="card tilt-card anim-element slide-up" style="transition-delay: 0.2s;">
+                    <div class="tilt-inner">
+                         <img class="mx-auto mb-4" src="https://placehold.co/100x100/A78BFA/0A0F2C?text=VISUAL" onerror="this.src='https://placehold.co/100x100/A78BFA/0A0F2C?text=VISUAL'" alt="Branding Icon" style="width: 100px; height: 100px; object-fit: cover; border-radius: 8px;">
+                        <h3 class="card-title">Visual Identity</h3>
+                        <p class="text-sm" style="color: var(--color-text-faint);">Crafting unique logos, brand guidelines, and complete visual systems that stand out.</p>
+                        <div style="margin-top: 1rem; text-align: right;">
+                            <a href="#contact" class="btn-secondary">CONTACT US &rarr;</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="card tilt-card anim-element slide-right" style="transition-delay: 0.4s;">
+                    <div class="tilt-inner">
+                         <img class="mx-auto mb-4" src="https://placehold.co/100x100/A78BFA/0A0F2C?text=SEO" onerror="this.src='https://placehold.co/100x100/A78BFA/0A0F2C?text=SEO'" alt="SEO Icon" style="width: 100px; height: 100px; object-fit: cover; border-radius: 8px;">
+                        <h3 class="card-title">Content & SEO</h3>
+                        <p class="text-sm" style="color: var(--color-text-faint);">Data-driven content strategies that boost organic reach and establish industry authority.</p>
+                        <div style="margin-top: 1rem; text-align: right;">
+                            <a href="#contact" class="btn-secondary">CONTACT US &rarr;</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Call to Action Section with Animated Line -->
+        <section class="container text-center" style="padding: 6rem 0;">
+            <h2 class="hero-title anim-element slide-up" style="font-size: 3rem;">Ready to <span>Elevate</span> Your Brand?</h2>
+            <div class="line-divider anim-element slide-up" style="transition-delay: 0.2s;">
+                <svg viewBox="0 0 600 2" preserveAspectRatio="none">
+                    <path class="animated-line" d="M0 1 L600 1" stroke="var(--color-accent-1)" stroke-width="2" stroke-dasharray="600" stroke-dashoffset="600"></path>
+                </svg>
+            </div>
+            <a href="#contact" class="btn-primary magnetic anim-element slide-up" style="font-size: 1.25rem; transition-delay: 0.4s;">Discuss Your Vision</a>
+        </section>
+    </template>
+
+    <!-- 2. Services Page Content (Updated with Pricing and Buttons) -->
+    <template id="services-page-template">
+        <section class="container" style="padding: 8rem 0 4rem;">
+            <h1 class="hero-title text-center mb-20 anim-element slide-up" style="font-size: 4rem;">Our Service <span>Packages</span></h1>
+            <div class="portfolio-grid" style="grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));">
+                
+                <section class="container" style="padding: 8rem 0 4rem;">
+    <h1 class="hero-title text-center mb-20 anim-element slide-up">
+        Our Premium <span>Service Packages</span>
+    </h1>
+
+    <div class="portfolio-grid">
+
+        <!-- ---------------- OLD SERVICES ---------------- -->
+
+        <!-- Web Designing -->
+        <div class="card anim-element slide-left">
+            <h3 class="card-title">Web Designing</h3>
+            <p class="text-sm">Modern, fast & fully responsive website development.</p>
+            <div style="margin-top: 1rem; font-weight: 600; font-size: 1.2rem;">₹9,999</div>
+            <a href="#contact" class="btn-primary" style="margin-top: 1rem;">Book Now</a>
+        </div>
+
+        <!-- Graphic Designing -->
+        <div class="card anim-element slide-up">
+            <h3 class="card-title">Graphic Designing</h3>
+            <p class="text-sm">Branding, posters, logos & all type of high-end creative designs.</p>
+            <div style="margin-top: 1rem; font-weight: 600;">Price varies by scope</div>
+            <a href="#contact" class="btn-primary" style="margin-top: 1rem;">Book Now</a>
+        </div>
+
+        <!-- Video Editing -->
+        <div class="card anim-element slide-right">
+            <h3 class="card-title">Video Editing</h3>
+            <p class="text-sm">Professional cinematic editing for reels, ads & promos.</p>
+            <div style="margin-top: 1rem; font-weight: 600;">₹199</div>
+            <a href="#contact" class="btn-primary" style="margin-top: 1rem;">Book Now</a>
+        </div>
+
+        <!-- Photo Editing -->
+        <div class="card anim-element slide-left">
+            <h3 class="card-title">Photo Editing</h3>
+            <p class="text-sm">High quality retouching & colour correction.</p>
+            <div style="margin-top: 1rem; font-weight: 600;">₹99</div>
+            <a href="#contact" class="btn-primary" style="margin-top: 1rem;">Book Now</a>
+        </div>
+
+        <!-- ---------------- NEW SERVICES ---------------- -->
+
+        <!-- E-Commerce Listing -->
+        <div class="card anim-element slide-up">
+            <h3 class="card-title">E-Commerce Listing</h3>
+            <p class="text-sm">Full professional listing on any marketplace.</p>
+            <div style="margin-top: 1rem; font-weight: 600;">₹149</div>
+            <a href="#contact" class="btn-primary" style="margin-top: 1rem;">Book Now</a>
+        </div>
+
+        <!-- Product Ad Video -->
+        <div class="card anim-element slide-right">
+            <h3 class="card-title">Product Ad Video</h3>
+            <p class="text-sm">High quality promotional product ads.</p>
+            <div style="margin-top: 1rem; font-weight: 600;">₹499</div>
+            <a href="#contact" class="btn-primary" style="margin-top: 1rem;">Book Now</a>
+        </div>
+
+        <!-- Product Ad Banner -->
+        <div class="card anim-element slide-left">
+            <h3 class="card-title">Product Ad Banner</h3>
+            <p class="text-sm">Premium looking ads for marketplaces.</p>
+            <div style="margin-top: 1rem; font-weight: 600;">₹249</div>
+            <a href="#contact" class="btn-primary" style="margin-top: 1rem;">Book Now</a>
+        </div>
+
+        <!-- Account Creating -->
+        <div class="card anim-element slide-up">
+            <h3 class="card-title">Account Creating</h3>
+            <p class="text-sm">Meesho, Flipkart, Amazon account setup.</p>
+            <div style="margin-top: 1rem; font-weight: 600;">₹999</div>
+            <a href="#contact" class="btn-primary" style="margin-top: 1rem;">Book Now</a>
+        </div>
+
+        <!-- ---------------- COMBO PACKS ---------------- -->
+
+        <!-- Meesho Combo -->
+        <div class="card anim-element slide-right">
+            <h3 class="card-title">Meesho Combo Pack</h3>
+            <p class="text-sm">Meesho account + 50 listings professionally done.</p>
+            <div style="margin-top: 1rem; font-weight: 600;">₹14,999</div>
+            <a href="#contact" class="btn-primary" style="margin-top: 1rem;">Book Now</a>
+        </div>
+
+        <!-- Flipkart Combo -->
+        <div class="card anim-element slide-left">
+            <h3 class="card-title">Flipkart Combo Pack</h3>
+            <p class="text-sm">Flipkart account + 50 listings with premium product uploads.</p>
+            <div style="margin-top: 1rem; font-weight: 600;">₹19,999</div>
+            <a href="#contact" class="btn-primary" style="margin-top: 1rem;">Book Now</a>
+        </div>
+
+        <!-- Amazon Combo -->
+        <div class="card anim-element slide-up">
+            <h3 class="card-title">Amazon Combo Pack</h3>
+            <p class="text-sm">Amazon account + 50 listings with SEO optimized content.</p>
+            <div style="margin-top: 1rem; font-weight: 600;">₹20,499</div>
+            <a href="#contact" class="btn-primary" style="margin-top: 1rem;">Book Now</a>
+        </div>
+
+    </div>
+</section>
+
+</div>
+
+            </div>
+        </section>
+    </template>
+
+    <!-- 3. Portfolio Page Content -->
+    <template id="portfolio-page-template">
+        <section class="container" style="padding: 8rem 0 4rem;">
+            <h1 class="hero-title text-center mb-16 anim-element slide-up" style="font-size: 4rem;">Our Featured <span>Work</span></h1>
+            <div class="portfolio-grid">
+                <div class="portfolio-item tilt-card anim-element slide-up">
+                    <img class="tilt-inner" src="https://images.unsplash.com/photo-1600861194943-7f2a13b6329c?q=80&w=600&auto=format&fit=crop" 
+                         onerror="this.src='https://placehold.co/600x400/0A0F2C/A78BFA?text=SaaS+Platform'" 
+                         alt="SaaS Platform" 
+                         data-image="https://images.unsplash.com/photo-1600861194943-7f2a13b6329c?q=80&w=1200&auto=format&fit=crop" 
+                         data-caption="Premium SaaS Dashboard and Analytics Platform">
+                </div>
+                <div class="portfolio-item tilt-card anim-element slide-up" style="transition-delay: 0.2s;">
+                    <img class="tilt-inner" src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?q=80&w=600&auto=format&fit=crop" 
+                         onerror="this.src='https://placehold.co/600x400/0A0F2C/A78BFA?text=E-commerce+Dev'" 
+                         alt="E-commerce Development" 
+                         data-image="https://images.unsplash.com/photo-1555066931-4365d14bab8c?q=80&w=1200&auto=format&fit=crop" 
+                         data-caption="High-Conversion E-commerce Platform Development">
+                </div>
+                <div class="portfolio-item tilt-card anim-element slide-up" style="transition-delay: 0.4s;">
+                    <img class="tilt-inner" src="https://images.unsplash.com/photo-1610484824765-8b4380693a9d?q=80&w=600&auto=format&fit=crop" 
+                         onerror="this.src='https://placehold.co/600x400/0A0F2C/A78BFA?text=Mobile+UX'" 
+                         alt="Mobile UX" 
+                         data-image="https://images.unsplash.com/photo-1610484824765-8b4380693a9d?q=80&w=1200&auto=format&fit=crop" 
+                         data-caption="Mobile Application UI/UX Redesign">
+                </div>
+                <div class="portfolio-item tilt-card anim-element slide-up" style="transition-delay: 0.6s;">
+                    <img class="tilt-inner" src="https://images.unsplash.com/photo-1510511459019-5be7401cd58e?q=80&w=600&auto=format&fit=crop" 
+                         onerror="this.src='https://placehold.co/600x400/0A0F2C/A78BFA?text=Branding'" 
+                         alt="Branding" 
+                         data-image="https://images.unsplash.com/photo-151051145901cd58e?q=80&w=1200&auto=format&fit=crop" 
+                         data-caption="Complete Visual Identity and Branding Project">
+                </div>
+                <div class="portfolio-item tilt-card anim-element slide-up" style="transition-delay: 0.8s;">
+                    <img class="tilt-inner" src="https://images.unsplash.com/photo-1628126780775-d148e6c75c80?q=80&w=600&auto=format&fit=crop" 
+                         onerror="this.src='https://placehold.co/600x400/0A0F2C/A78BFA?text=Video+Production'" 
+                         alt="Video Production" 
+                         data-image="https://images.unsplash.com/photo-1628126780775-d148e6c75c80?q=80&w=1200&auto=format&fit=crop" 
+                         data-caption="High-End Product Video Editing Series">
+                </div>
+                <div class="portfolio-item tilt-card anim-element slide-up" style="transition-delay: 1.0s;">
+                    <img class="tilt-inner" src="https://images.unsplash.com/photo-1611095972828-566a9d18b456?q=80&w=600&auto=format&fit=crop" 
+                         onerror="this.src='https://placehold.co/600x400/0A0F2C/A78BFA?text=Retouching'" 
+                         alt="Photo Retouching" 
+                         data-image="https://images.unsplash.com/photo-1611095972828-566a9d18b456?q=80&w=1200&auto=format&fit=crop" 
+                         data-caption="Advanced Product Photo Retouching and Compositing">
+                </div>
+            </div>
+        </section>
+    </template>
+
+    <!-- 4. About Page Content -->
+    <template id="about-page-template">
+        <section class="container" style="padding: 8rem 0 4rem;">
+            <h1 class="hero-title text-center mb-16 anim-element slide-up" style="font-size: 4rem;">Driven by <span>Perfection</span></h1>
+            
+            <div class="about-layout" style="display: flex; gap: 40px; align-items: center; margin-bottom: 4rem;">
+                <div style="flex: 1.5;">
+                    <p class="text-lg anim-element slide-left">
+                        AK STUDIO was founded on the principle that digital presence should be an asset, not an afterthought. We blend high-end design aesthetics with robust, scalable technology to deliver products that are visually stunning and highly functional.
+                    </p>
+                    <div class="line-divider anim-element slide-left" style="transition-delay: 0.2s; margin-top: 1rem;">
+                        <svg viewBox="0 0 600 2" preserveAspectRatio="none">
+                            <path class="animated-line" d="M0 1 L600 1" stroke="var(--color-accent-1)" stroke-width="2" stroke-dasharray="600" stroke-dashoffset="600"></path>
+                        </svg>
+                    </div>
+                    <p class="text-lg anim-element slide-left" style="transition-delay: 0.4s; margin-top: 1rem;">
+                        Our team is composed of seasoned professionals—designers, developers, and strategists—all dedicated to mirroring the premium quality of the Framer/XTRACT experience in every client project.
+                    </p>
+                </div>
+                <div style="flex: 1; position: relative;" class="anim-element slide-right">
+                    <img src="https://images.unsplash.com/photo-1549491795-580a15d861d9?q=80&w=500&auto=format&fit=crop" 
+                         onerror="this.src='https://placehold.co/500x350/A78BFA/0A0F2C?text=About+AK+Studio'" 
+                         alt="About Banner" 
+                         style="width: 100%; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.5);">
+                </div>
+            </div>
+
+            <!-- Stats Section -->
+            <div class="portfolio-grid" style="grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); text-align: center;">
+                <div class="card tilt-card anim-element slide-up">
+                    <div class="tilt-inner">
+                        <h3 style="font-size: 3rem; color: var(--color-accent-2);">50+</h3>
+                        <p>Successful Projects</p>
+                    </div>
+                </div>
+                <div class="card tilt-card anim-element slide-up" style="transition-delay: 0.2s;">
+                    <div class="tilt-inner">
+                        <h3 style="font-size: 3rem; color: var(--color-accent-2);">98%</h3>
+                        <p>Client Satisfaction</p>
+                    </div>
+                </div>
+                <div class="card tilt-card anim-element slide-up" style="transition-delay: 0.4s;">
+                    <div class="tilt-inner">
+                        <h3 style="font-size: 3rem; color: var(--color-accent-2);">20k+</h3>
+                        <p>Lines of Code Written</p>
+                    </div>
+                </div>
+                <div class="card tilt-card anim-element slide-up" style="transition-delay: 0.6s;">
+                    <div class="tilt-inner">
+                        <h3 style="font-size: 3rem; color: var(--color-accent-2);">5Yrs</h3>
+                        <p>In Business</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </template>
+
+    <!-- 5. Contact Page Content -->
+    <template id="contact-page-template">
+        <section class="container" style="padding: 8rem 0 4rem; position: relative; z-index: 10;">
+            <h1 class="hero-title text-center mb-4 anim-element slide-up" style="font-size: 4rem;">Let's <span>Connect</span></h1>
+            <p class="text-center mb-10 text-lg anim-element slide-up" style="color: var(--color-accent-2); transition-delay: 0.2s;">Start a conversation about your next digital masterpiece.</p>
+            
+            <div class="contact-flex" style="display: flex; gap: 40px;">
+                <!-- AI Project Brief Generator (New Feature) -->
+                <div style="flex: 1.2;">
+                    <div class="card anim-element slide-left" style="padding: 2.5rem;">
+                        <h2 style="font-size: 2rem; margin-bottom: 1rem; color: var(--color-accent-2);">✨ AI Project Brief Generator</h2>
+                        <p style="margin-bottom: 1.5rem; color: var(--color-text-faint);">Got a general idea? Let our AI quickly structure it into a professional project brief to fast-track our discussion.</p>
+                        
+                        <label for="project-idea">Your Project Idea (e.g., "A site to sell my custom coffee mugs")</label>
+                        <textarea id="project-idea" rows="3" placeholder="Describe your concept briefly..." required></textarea>
+
+                        <button id="generate-brief-btn" class="btn-secondary magnetic" style="width: 100%; margin-bottom: 1rem;" 
+                                onclick="generateProjectBrief()">
+                            <span style="font-size: 1.5rem; line-height: 1;">✨</span> Generate Brief
+                        </button>
+
+                        <div id="brief-loading" class="loading-spinner" style="display: none; text-align: center; color: var(--color-accent-2);">Generating...</div>
+                        <div id="brief-output" style="display: none;"></div>
+                    </div>
+                </div>
+
+                <!-- Contact Form -->
+                <div style="flex: 1;">
+                    <div class="anim-element slide-right">
+                        <form class="contact-form" onsubmit="event.preventDefault(); showContactMessage();">
+                            <label for="name">Your Name</label>
+                            <input type="text" id="name" name="name" required>
+
+                            <label for="email">Your Email</label>
+                            <input type="email" id="email" name="email" required>
+
+                            <label for="service">Interested Service</label>
+                            <input type="text" id="service" name="service" list="services-list" placeholder="e.g., Web Design" required>
+                            <datalist id="services-list">
+                                <option value="Web Design & Development (₹9,999)">
+                                <option value="Visual Identity & Branding (Quote Required)">
+                                <option value="Professional Video Editing (₹199)">
+                                <option value="Advanced Photo Retouching (₹99)">
+                            </datalist>
+
+                            <label for="message">Project Details</label>
+                            <textarea id="message" name="message" rows="5" required></textarea>
+
+                            <button type="submit" class="btn-primary magnetic" style="width: 100%;">Send Inquiry</button>
+                        </form>
+                        <div id="contact-message" style="margin-top: 1.5rem; color: var(--color-accent-2); text-align: center; display: none;">
+                            Thank you for your inquiry! We'll get back to you within 24 hours.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </template>
+
+    <!-- --- JAVASCRIPT --- -->
+    <script>
+        const appContainer = document.getElementById('app-container');
+        const navbar = document.getElementById('main-navbar');
+        const progressBar = document.getElementById('scroll-progress');
+        const backToTopBtn = document.getElementById('back-to-top');
+        
+        const pageTemplates = {
+            'home': document.getElementById('home-page-template'),
+            'services': document.getElementById('services-page-template'),
+            'portfolio': document.getElementById('portfolio-page-template'),
+            'about': document.getElementById('about-page-template'),
+            'contact': document.getElementById('contact-page-template'),
+        };
+        const pageNames = ['home', 'services', 'portfolio', 'about', 'contact'];
+
+        // --- GEMINI API Configuration ---
+        const API_KEY = ""; 
+        const MODEL_NAME = "gemini-2.5-flash-preview-09-2025";
+
+        // --- Utility function for Exponential Backoff (API calls) ---
+        async function fetchWithBackoff(url, options, maxRetries = 5) {
+            for (let i = 0; i < maxRetries; i++) {
+                try {
+                    const response = await fetch(url, options);
+                    if (response.status !== 429 && response.ok) {
+                        return response;
+                    }
+                    if (response.status === 429 && i < maxRetries - 1) {
+                        const delay = Math.pow(2, i) * 1000 + Math.random() * 1000;
+                        await new Promise(resolve => setTimeout(resolve, delay));
+                        continue;
+                    }
+                    throw new Error(`API call failed with status: ${response.status}`);
+                } catch (error) {
+                    if (i === maxRetries - 1) throw error;
+                    const delay = Math.pow(2, i) * 1000 + Math.random() * 1000;
+                    await new Promise(resolve => setTimeout(resolve, delay));
+                }
+            }
+        }
+
+        /**
+         * Calls the Gemini API to generate a structured project brief.
+         */
+        async function generateProjectBrief() {
+            const ideaInput = document.getElementById('project-idea');
+            const outputDiv = document.getElementById('brief-output');
+            const loadingDiv = document.getElementById('brief-loading');
+            const generateBtn = document.getElementById('generate-brief-btn');
+            
+            if (!ideaInput.value.trim()) {
+                outputDiv.style.display = 'block';
+                outputDiv.innerHTML = '<p style="color: var(--color-accent-2);">Please enter a project idea first.</p>';
+                return;
+            }
+
+            outputDiv.style.display = 'none';
+            loadingDiv.style.display = 'block';
+            generateBtn.disabled = true;
+            generateBtn.innerHTML = '<span style="font-size: 1.5rem; line-height: 1;">⚙️</span> Generating...';
+
+            const userQuery = `Generate a high-level project brief for this user idea: "${ideaInput.value.trim()}"`;
+            
+            const systemPrompt = `You are a world-class Digital Agency Strategist from AK STUDIO. Your task is to take a vague project idea and generate a structured, premium, and concise project brief. Keep the tone professional, aspirational, and focused on high-quality digital deliverables.`;
+
+            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/${MODEL_NAME}:generateContent?key=${API_KEY}`;
+            
+            // Define the JSON schema for the structured output
+            const responseSchema = {
+                type: "OBJECT",
+                properties: {
+                    projectName: { "type": "STRING", "description": "A creative, premium-sounding project name." },
+                    slogan: { "type": "STRING", "description": "A concise, powerful marketing slogan for the product." },
+                    coreFeatures: {
+                        "type": "ARRAY",
+                        "description": "A list of 3-4 essential features.",
+                        "items": { "type": "STRING" }
+                    },
+                    techStackSuggestion: { "type": "STRING", "description": "A modern, high-performance technology suggestion (e.g., Next.js, headless CMS, serverless)."},
+                    estimatedScope: { "type": "STRING", "description": "A high-level scope estimate (e.g., Small MVP, Medium Project, Large Enterprise Platform)." }
+                },
+                required: ["projectName", "slogan", "coreFeatures", "techStackSuggestion", "estimatedScope"]
+            };
+
+            const payload = {
+                contents: [{ parts: [{ text: userQuery }] }],
+                systemInstruction: { parts: [{ text: systemPrompt }] },
+                generationConfig: {
+                    responseMimeType: "application/json",
+                    responseSchema: responseSchema
+                }
+            };
+
+            try {
+                const response = await fetchWithBackoff(apiUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+                
+                const result = await response.json();
+                
+                let briefJson;
+                try {
+                    const jsonString = result.candidates?.[0]?.content?.parts?.[0]?.text;
+                    if (!jsonString) throw new Error("API response text is missing or empty.");
+                    briefJson = JSON.parse(jsonString);
+                } catch (e) {
+                    console.error("Failed to parse Gemini JSON response:", e, result);
+                    outputDiv.innerHTML = `<p style="color: var(--color-accent-2);">[AI Error] Could not structure the response. Please try a different idea.</p>`;
+                    return;
+                }
+
+                let featuresHtml = briefJson.coreFeatures.map(f => `<li>${f}</li>`).join('');
+
+                outputDiv.innerHTML = `
+                    <h4 style="font-size: 1.5rem;">Project Brief: ${briefJson.projectName || 'Untitled Project'}</h4>
+                    <p style="color: var(--color-accent-1); font-style: italic;">"${briefJson.slogan || 'No Slogan'}"</p>
+                    
+                    <h4>Key Features</h4>
+                    <ul class="brief-feature-list">${featuresHtml}</ul>
+                    
+                    <h4>Suggested Technology</h4>
+                    <p>${briefJson.techStackSuggestion || 'Modern stack required'}</p>
+                    
+                    <h4>Estimated Scope</h4>
+                    <p style="font-weight: 600;">${briefJson.estimatedScope || 'TBD'}</p>
+                    
+                    <p style="margin-top: 1.5rem; font-size: 0.9rem; color: var(--color-text-faint);">Ready to discuss this brief further? Fill out the contact form next to this!</p>
+                `;
+                outputDiv.style.display = 'block';
+
+            } catch (error) {
+                console.error("Gemini API Error:", error);
+                outputDiv.style.display = 'block';
+                outputDiv.innerHTML = `<p style="color: var(--color-accent-2);">[System Error] Failed to reach the AI strategist. Please check the console for details.</p>`;
+            } finally {
+                loadingDiv.style.display = 'none';
+                generateBtn.disabled = false;
+                generateBtn.innerHTML = '<span style="font-size: 1.5rem; line-height: 1;">✨</span> Generate Brief';
+            }
+        }
+
+        // --- Framer Blur Fade Page Transitions & Routing ---
+        function loadPage() {
+            const hash = window.location.hash.replace('#', '') || 'home';
+            const pageKey = pageNames.includes(hash) ? hash : 'home';
+
+            // 1. Start the 'fade out and blur' transition
+            appContainer.classList.add('page-transition-out');
+            appContainer.classList.remove('page-transition-in');
+            appContainer.style.pointerEvents = 'none';
+
+            setTimeout(() => {
+                const template = pageTemplates[pageKey];
+                if (template) {
+                    // 2. Replace content
+                    const clonedContent = template.content.cloneNode(true);
+                    appContainer.innerHTML = '';
+                    appContainer.appendChild(clonedContent);
+
+                    // Re-initialize scripts for the new page
+                    initPageScripts(pageKey);
+                    
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                    
+                    // 3. Start the 'fade in and de-blur' transition
+                    appContainer.classList.remove('page-transition-out');
+                    appContainer.classList.add('page-transition-in');
+                    appContainer.style.pointerEvents = 'auto';
+
+                } else {
+                    appContainer.innerHTML = `<section class="container" style="padding: 10rem 0;"><h1 class="hero-title text-center">404 - Page Not Found</h1></section>`;
+                    appContainer.classList.remove('page-transition-out');
+                    appContainer.classList.add('page-transition-in');
+                    appContainer.style.pointerEvents = 'auto';
+                }
+            }, 400); 
+        }
+
+        // --- Core Initialization for each page ---
+        function initPageScripts(pageKey) {
+            initScrollAnimations();
+            initMagneticButtons();
+            initCardTilt(); 
+            initLightbox(); 
+            
+            if (pageKey === 'home') {
+                initHeroTextAnimation();
+            }
+        }
+        
+        // --- 3D CARD TILT EFFECT ---
+        function initCardTilt() {
+            const tiltCards = document.querySelectorAll('.tilt-card');
+
+            tiltCards.forEach(card => {
+                const inner = card.querySelector('.tilt-inner');
+                if (!inner) return;
+
+                card.addEventListener('mousemove', (e) => {
+                    const rect = card.getBoundingClientRect();
+                    const x = e.clientX - rect.left;
+                    const y = e.clientY - rect.top;
+
+                    // Calculate position relative to the center (-1 to 1)
+                    const halfWidth = rect.width / 2;
+                    const halfHeight = rect.height / 2;
+                    
+                    // Reversed tilt: closer to center = less rotation
+                    const rotateX = (-(y - halfHeight) / halfHeight) * 5; // Max 5 degrees
+                    const rotateY = ((x - halfWidth) / halfWidth) * 5;     // Max 5 degrees
+
+                    inner.style.transform = `scale(1.02) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateZ(20px)`;
+                });
+
+                card.addEventListener('mouseleave', () => {
+                    inner.style.transform = 'scale(1) rotateX(0deg) rotateY(0deg) translateZ(0)';
+                });
+            });
+        }
+
+        // --- Smooth Scroll-Trigger Animations (IntersectionObserver) ---
+        function initScrollAnimations() {
+            const elements = document.querySelectorAll('.anim-element');
+            elements.forEach(el => el.classList.remove('visible'));
+            
+            const observer = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, {
+                rootMargin: '0px',
+                threshold: 0.1
+            });
+
+            elements.forEach(el => observer.observe(el));
+            
+            // Also explicitly trigger the line divider animation
+            const line = document.querySelector('.animated-line');
+            if (line) {
+                 const lineObserver = new IntersectionObserver((entries) => {
+                    if (entries[0].isIntersecting) {
+                        entries[0].target.style.strokeDashoffset = '0';
+                        lineObserver.unobserve(entries[0].target);
+                    }
+                }, { threshold: 0.8 });
+                lineObserver.observe(line);
+            }
+        }
+
+        // --- Magnetic Button Hover ---
+        function initMagneticButtons() {
+            const magneticElements = document.querySelectorAll('.magnetic');
+            
+            magneticElements.forEach(el => {
+                el.addEventListener('mousemove', (e) => {
+                    const rect = el.getBoundingClientRect(); 
+                    const x = e.clientX - rect.left;
+                    const y = e.clientY - rect.top;
+                    
+                    const center = { x: rect.width / 2, y: rect.height / 2 };
+                    
+                    // Calculate movement relative to center (Max 8px movement)
+                    const moveX = (x - center.x) * 0.3; 
+                    const moveY = (y - center.y) * 0.3;
+                    
+                    el.style.transform = `translate(${moveX}px, ${moveY}px)`;
+                });
+
+                el.addEventListener('mouseleave', () => {
+                    el.style.transform = `translate(0px, 0px)`;
+                });
+            });
+        }
+
+        // --- Navbar Scroll Effect & Scroll Progress/Back-to-Top Handler ---
+        function handleScroll() {
+            // 1. Navbar Scroll Effect
+            if (window.scrollY > 50) {
+                navbar.classList.add('navbar-scrolled');
+            } else {
+                navbar.classList.remove('navbar-scrolled');
+            }
+
+            // 2. Scroll Progress Bar
+            const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+            const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const scrolled = (height > 0) ? (winScroll / height) * 100 : 0;
+            progressBar.style.width = scrolled + "%";
+
+            // 3. Back to Top Button visibility
+            if (window.scrollY > 400) {
+                backToTopBtn.classList.add('show');
+            } else {
+                backToTopBtn.classList.remove('show');
+            }
+        }
+
+        // --- Letter-by-letter text reveal in hero ---
+        const typingWords = ["Next-Gen Websites.", "Sleek SaaS Solutions.", "Powerful Branding."];
+        let typingWordIndex = 0;
+        let typingCharIndex = 0;
+        let typingIsDeleting = false;
+        let typingTimeout;
+
+        function type() {
+            const currentWord = typingWords[typingWordIndex];
+            const typingTextEl = document.getElementById('typing-text');
+            
+            if (!typingTextEl) {
+                clearTimeout(typingTimeout);
+                return; 
+            }
+
+            if (typingIsDeleting) {
+                typingTextEl.textContent = currentWord.substring(0, typingCharIndex - 1);
+                typingCharIndex--;
+            } else {
+                typingTextEl.textContent = currentWord.substring(0, typingCharIndex + 1);
+                typingCharIndex++;
+            }
+
+            let typeSpeed = 80;
+
+            if (typingIsDeleting) {
+                typeSpeed /= 2;
+            }
+
+            if (!typingIsDeleting && typingCharIndex === currentWord.length) {
+                typeSpeed = 2000; 
+                typingIsDeleting = true;
+            } else if (typingIsDeleting && typingCharIndex === 0) {
+                typingIsDeleting = false;
+                typingWordIndex = (typingWordIndex + 1) % typingWords.length;
+                typeSpeed = 500; 
+            }
+
+            typingTimeout = setTimeout(type, typeSpeed);
+        }
+
+        function initHeroTextAnimation() {
+            clearTimeout(typingTimeout);
+            typingCharIndex = 0;
+            typingIsDeleting = false;
+            typingWordIndex = 0;
+            type();
+        }
+        
+        // --- Lightbox Functions for Portfolio Page ---
+        let lightbox;
+        function openLightbox(src, caption) {
+            lightbox = document.getElementById('lightbox');
+            document.getElementById('lightbox-image').src = src;
+            document.getElementById('lightbox-caption').textContent = caption;
+            lightbox.style.display = 'block'; 
+        }
+
+        function closeLightbox() {
+            lightbox.style.display = 'none';
+        }
+        
+        function initLightbox() {
+            lightbox = document.getElementById('lightbox');
+            const closeBtn = document.querySelector('.lightbox-close');
+            if(closeBtn) closeBtn.onclick = closeLightbox;
+            
+            document.querySelectorAll('.portfolio-item img').forEach(img => {
+                img.onclick = function(e) {
+                    e.preventDefault(); 
+                    openLightbox(this.getAttribute('data-image'), this.getAttribute('data-caption'));
+                };
+            });
+            
+            if(lightbox) {
+                lightbox.onclick = (e) => {
+                    if(e.target.id === 'lightbox') closeLightbox();
+                };
+            }
+        }
+        
+        // --- Contact Form Success Message ---
+        function showContactMessage() {
+            const msgEl = document.getElementById('contact-message');
+            if(msgEl) msgEl.style.display = 'block';
+            
+            document.querySelector('.contact-form').reset();
+            
+            setTimeout(() => {
+                if(msgEl) msgEl.style.display = 'none';
+            }, 5000);
+        }
+        
+        // --- CYBER GRID MATRIX Animation Logic ---
+        let gridCanvas;
+        let ctx;
+        let width, height;
+        let centerX, centerY;
+        let animationFrameId;
+        const GRID_SIZE = 40; // Spacing for grid points
+        const Z_DEPTH = 120; // Number of vertical lines to draw
+        let animationTime = 0;
+
+        function resizeCanvas() {
+            if (!gridCanvas) return;
+            width = window.innerWidth;
+            height = window.innerHeight;
+            gridCanvas.width = width;
+            gridCanvas.height = height;
+            centerX = width / 2;
+            centerY = height / 2;
+            // The canvas context needs to be re-acquired on resize in some environments, but we'll stick to a simple assignment for now.
+        }
+        
+        function animateGrid() {
+            if (!ctx) return;
+            
+            // Clear the canvas with a transparent layer for subtle trailing effect
+            ctx.fillStyle = 'rgba(10, 15, 44, 0.2)'; 
+            ctx.fillRect(0, 0, width, height);
+
+            animationTime += 0.05; // Time variable for movement and pulsing
+
+            // 1. Draw Horizontal Lines (Receding Perspective)
+            for (let z = 0; z < Z_DEPTH; z++) {
+                // zPrime is the animated position of the line in 3D space
+                let zPrime = (z + animationTime) % Z_DEPTH; 
+                
+                // Perspective scale factor
+                let scale = 1 / (1 + zPrime / 30); 
+                
+                // Opacity fades as the lines approach the "horizon"
+                ctx.globalAlpha = scale * 0.8; 
+
+                // Calculate screen Y position (from the bottom up)
+                let screenY = centerY + (height / 2) * scale;
+                
+                // Calculate line width (wider near the bottom)
+                let lineWidth = width * scale * 1.5; 
+
+                // Draw the line
+                ctx.strokeStyle = `var(--color-accent-1)`;
+                ctx.lineWidth = 1 + scale * 1.5;
+                ctx.beginPath();
+                ctx.moveTo(centerX - lineWidth / 2, screenY);
+                ctx.lineTo(centerX + lineWidth / 2, screenY);
+                ctx.stroke();
+            }
+
+            // 2. Draw Vertical Lines (Static for convergence)
+            for (let x = -GRID_SIZE; x <= GRID_SIZE; x++) {
+                ctx.globalAlpha = 0.3; // Constant low opacity for structural lines
+                ctx.strokeStyle = 'var(--color-accent-2)';
+                ctx.lineWidth = 1;
+
+                // Map grid lines from bottom center (0, height) to top center (centerX, centerY)
+                ctx.beginPath();
+                ctx.moveTo(centerX, centerY); 
+                
+                // Calculate x position at the bottom edge (z=0)
+                let bottomX = centerX + x * (width / GRID_SIZE) * 0.5; 
+                ctx.lineTo(bottomX, height);
+                ctx.stroke();
+            }
+            
+            // 3. Draw Pulsing Points on the Grid
+            const pulseRate = 0.05;
+            for (let x = -GRID_SIZE; x <= GRID_SIZE; x += 4) {
+                for (let z = 10; z < Z_DEPTH; z += 10) {
+                    let zPrime = (z + animationTime) % Z_DEPTH;
+                    let scale = 1 / (1 + zPrime / 30);
+                    
+                    if (scale > 0.05) { // Only draw visible points
+                        let pointX = centerX + (x * (width / GRID_SIZE) * 0.5) * scale;
+                        let pointY = centerY + (height / 2) * scale;
+                        
+                        // Pulsing opacity and size based on time and position
+                        let pulse = Math.sin(animationTime * pulseRate + x * 0.1 + z * 0.05) * 0.5 + 0.5;
+                        
+                        ctx.globalAlpha = pulse * 0.5 + 0.5;
+                        ctx.fillStyle = `rgba(56, 189, 248, ${ctx.globalAlpha})`; // Accent 1
+                        
+                        let size = 2 + scale * 4 * pulse;
+                        
+                        ctx.beginPath();
+                        ctx.arc(pointX, pointY, size, 0, Math.PI * 2);
+                        ctx.fill();
+                    }
+                }
+            }
+
+
+            animationFrameId = requestAnimationFrame(animateGrid);
+        }
+
+        function initGrid() {
+            gridCanvas = document.getElementById('starfield-canvas');
+            if (!gridCanvas) return;
+            
+            ctx = gridCanvas.getContext('2d');
+            
+            resizeCanvas();
+
+            // Start animation loop
+            if (!animationFrameId) {
+                animateGrid();
+            }
+        }
+        
+        function stopGrid() {
+            if (animationFrameId) {
+                cancelAnimationFrame(animationFrameId);
+                animationFrameId = null;
+            }
+        }
+
+
+        // --- Global Event Listeners ---
+        window.addEventListener('hashchange', loadPage);
+        window.addEventListener('scroll', handleScroll); 
+        window.addEventListener('resize', resizeCanvas);
+
+
+        // --- Initial Load ---
+        window.onload = () => {
+            initGrid(); // Initialize the dynamic background
+            handleScroll(); 
+            if (!window.location.hash || !pageNames.includes(window.location.hash.replace('#', ''))) {
+                window.location.hash = '#home';
+            }
+            loadPage(); 
+        };
+    </script>
+</body>
+</html>
